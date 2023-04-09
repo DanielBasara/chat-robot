@@ -10,7 +10,6 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 router.post("/translate", async (req, res) => {
-  console.log("Received request body:", req.body);
   const { text, targetLanguage } = req.body;
   try {
     const completion = await openai.createChatCompletion({
