@@ -1,31 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
-import { Configuration, OpenAIApi } from "openai";
 import { CircularProgress } from '@mui/material';
 
 function App() {
-  const configuration = new Configuration({
-    apiKey:  process.env.REACT_APP_OPENAI_API_KEY,
-  });
-
-  const openai = new OpenAIApi(configuration);
   const [inputValue, setInputValue] = useState("")
   const [response,setResponse]=useState("")
   const [loading, setLoading] = useState(false)
   const handleSendButtonClick=async ()=>{
-    setLoading(true)
-    const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [{role: "user", content: inputValue}],
+    setLoading(true)    
+    const translatedText = await fetch("/api/translate",{
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body:JSON.stringify({text:inputValue,targetLanguage:"Chinese"})
+    })
+    if (translatedText.ok) {
+      const textObject = await translatedText.json()
       
-    });
+      setResponse(textObject.translatedText);
+    
+    } else {
+      throw new Error('Translation failed');
+    }
 
-    setResponse(completion.data.choices[0].message?.content??"你别不说话啊！")
     setLoading(false)
     setInputValue("")
   }
@@ -37,7 +40,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <StyledH1>JOJO聊天机器人1.0版
+      <StyledH1>JOJO翻译机器人1.0版
       </StyledH1>
         <img src={logo} className="App-logo" alt="logo" />
       </header>
