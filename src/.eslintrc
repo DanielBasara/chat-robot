@@ -1,0 +1,13 @@
+{
+  "extends": ["eslint:recommended", "prettier"],
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      // 这里可以添加或修改你的规则
+    }
+  }

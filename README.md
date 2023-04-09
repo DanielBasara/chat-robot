@@ -1,6 +1,11 @@
-# Getting Started with Create React App
+# JOJO翻译官1.0测试版
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+##  静的テストスクリプト
+
+ESLintテスト
+
+### `npx eslint src/`
+
 
 ## Available Scripts
 
